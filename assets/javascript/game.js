@@ -8,7 +8,7 @@ var winCountElement = document.getElementById("win-count");
 var lossCountElement = document.getElementById("loss-count");
 var blinkElements = document.getElementsByClassName("blinking");
 var alertLineElements = document.getElementsByClassName("alert-line");
-var validGuesses = [ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' ];
+var validGuesses = [ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' ]; //Alle vars in mijn game
 
 var pressAnyKeyToStart = [
 	" ___                                       _                _              _               _   ",
@@ -50,27 +50,27 @@ var emptyAlert = [
 	"                                           "
 ];
 
-var game = new Galgje();
+var game = new Galgje(); //Hier begint de game
 
-document.onkeyup = function(event) {
+document.onkeyup = function(event) { //De onkeyup treedt op wanneer de gebruiker een toets loslaat 
 	var userGuess = event.key;
 
-	if (!game.gameOver) {
-		if (validGuesses.includes(userGuess) && !game.guessedLetters.includes(userGuess)) {
-			game.checkGuess(userGuess);
+	if (!game.gameOver) { //Als het niet gameOver is dan wordt de code tussen de acolades uitgevoerd
+		if (validGuesses.includes(userGuess) && !game.guessedLetters.includes(userGuess)) { //Als de geraden antwoorden één van de opgegeven woorden bevatten EN niet de geraden letters bevatten van de ingevoerde woorden.
+					game.checkGuess(userGuess);
 		}
 	} else {
 		game = new Galgje();
-		game.updatePageData();
+		game.updatePageData(); //Anders begint het een nieuwe game
 	}
 }
 
-window.setInterval(function() {
+window.setInterval(function() { //De setInterval() roept een functie aan of evalueert een uitdrukking op de opgegeven tussenstanden.
 	if (blinkElements.length > 0) {
-		if (game.guessedLetters.length === 0 || game.gameOver) {
+		if (game.guessedLetters.length === 0 || game.gameOver) { //Als de geraden letters 0 zijn dan is het game over
 			if (blinkElements[0].style.opacity === "1") {
 				for (var i = 0; i < blinkElements.length; i++) {
-					blinkElements[i].style.opacity = "0";
+					blinkElements[i].style.opacity = "0"; 
 				}
 			} else {
 				for (var i = 0; i < blinkElements.length; i++) {
@@ -80,7 +80,7 @@ window.setInterval(function() {
 		} else {
 			for (var i = 0; i < blinkElements.length; i++) {
 				blinkElements[i].style.opacity = "0";
-			}
+			} //Blink elements is ervoor om text te laten knipperen
 		}
 	}
 }, 750);
@@ -105,14 +105,14 @@ function Galgje() {
 		"gymzaal",
 		"jazzzanger",
 		"picknick"
-	]
+	] //Lijst die alle woorden die geraden kunnen worden bevatten
 
-	this.word = this.wordList[Math.floor(Math.random() * this.wordList.length)];
-	this.guessedLetters = [];
-	this.errors = 0;
-	this.visibleLetters = [];
-	this.gameOver = false;
-	this.alertLines = emptyAlert;
+	this.word = this.wordList[Math.floor(Math.random() * this.wordList.length)]; //Hij kiest hier een random woord uit de wordlist
+	this.guessedLetters = []; //De geraden letters worden weergegeven in de tab geraden letters
+	this.errors = 0; // Je begint met 0 fouten
+	this.visibleLetters = []; //Hier komen de geraden letters van het woord in beeld
+	this.gameOver = false; //In het begin staat de game over op false
+	this.alertLines = emptyAlert; 
 	for (var i = 0; i < this.word.length; i++) {
 		this.visibleLetters[i] = (false);
 	}
